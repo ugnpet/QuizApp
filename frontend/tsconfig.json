@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                                  // Set a more modern JavaScript target
+    "lib": ["dom", "dom.iterable", "esnext"],         // Include browser APIs and ESNext features
+    "jsx": "react-jsx",                               // Use the JSX runtime for React
+    "module": "ESNext",                               // Use ESNext modules for tree-shaking support
+    "moduleResolution": "node",                      // Resolve modules like Node.js
+    "esModuleInterop": true,                         // Ease compatibility with CommonJS modules
+    "skipLibCheck": true,                            // Skip type-checking `.d.ts` files
+    "strict": true,                                  // Enable all strict type-checking options
+    "forceConsistentCasingInFileNames": true,        // Ensure consistent casing in imports
+    "resolveJsonModule": true,                       // Allow importing `.json` files
+    "isolatedModules": true,                         // Ensure each file can be transpiled independently
+    "allowSyntheticDefaultImports": true            // Allow default imports even if module doesn't define one
+  },
+  "include": ["src"],                                // Include the `src` directory for compilation
+  "exclude": ["node_modules", "build", "dist"]      // Exclude unnecessary directories
+}
