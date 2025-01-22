@@ -1,13 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Models;
+using Mapping;
+using Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<QuizDbContext>(options =>
+    options.UseInMemoryDatabase("QuizDatabase")); 
+builder.Services.AddAutoMapper(typeof(MappingProfile)); 
+builder.Services.AddControllers(); 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -15,30 +21,49 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers(); // Map controller routes
 
-var summaries = new[]
+// Seed initial data
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var context = scope.ServiceProvider.GetRequiredService<QuizDbContext>();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    context.Quizzes.AddRange(
+        new Quiz
+        {
+            Id = 1,
+            Text = "What is 2 + 2?",
+            Type = QuizType.Radio,
+            Options = new List<string> { "3", "4", "5" },
+            CorrectOptions = new List<string> { "4" }
+        },
+        new Quiz
+        {
+            Id = 2,
+            Text = "Select primary colors",
+            Type = QuizType.Checkbox,
+            Options = new List<string> { "Red", "Blue", "Yellow", "Green" },
+            CorrectOptions = new List<string> { "Red", "Blue", "Yellow" }
+        },
+        new Quiz
+        {
+            Id = 3,
+            Text = "What is the capital of France?",
+            Type = QuizType.Text,
+            Options = new List<string> { "Paris" },
+            CorrectOptions = new List<string> { "Paris" }
+        },
+        new Quiz
+        {
+            Id = 4,
+            Text = "Which of these are fruits?",
+            Type = QuizType.Checkbox,
+            Options = new List<string> { "Apple", "Carrot", "Banana", "Potato" },
+            CorrectOptions = new List<string> { "Apple", "Banana" }
+        }
+    );
+
+    context.SaveChanges();
+}
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -9,3 +9,7 @@ backend/obj/
 *.user
 *.vs
 *.DS_Store
+
+# Test project build artifacts
+QuizAppBackend.Tests/bin/
+QuizAppBackend.Tests/obj/
