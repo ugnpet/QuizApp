@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Quiz } from "../types";
 import Modal from "../components/Modal";
-import QuizNavigation from "./QuizNavigation";
-import QuizContent from "./QuizContent";
+import QuizNavigation from "../components/QuizNavigation";
+import QuizContent from "../components/QuizContent";
 
 const QuizPage: React.FC = () => {
   const [questions, setQuestions] = useState<Quiz[]>([]);

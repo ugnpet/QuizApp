@@ -24,4 +24,5 @@ export interface ResultDTO {
   userEmail: string;
   score: number;
   timeInSeconds: number;
+  submittedAt: string;
 }

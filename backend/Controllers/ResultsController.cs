@@ -66,6 +66,7 @@ public class ResultsController : ControllerBase
         }
 
         result.Score = score;
+        result.SubmittedAt = DateTime.UtcNow;
         _context.Results.Add(result);
         _context.SaveChanges();
 

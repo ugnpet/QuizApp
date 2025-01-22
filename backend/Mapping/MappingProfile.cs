@@ -25,4 +25,6 @@ public class ResultDTO
     public string UserEmail { get; set; } = string.Empty;
     public int Score { get; set; }
     public int TimeInSeconds { get; set; }
+    public DateTime SubmittedAt { get; set; }
+
 }
