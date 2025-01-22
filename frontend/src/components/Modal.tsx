@@ -9,6 +9,11 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, email, setEmail }) => {
+  const isValidEmail = (email: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -20,7 +25,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, email, setEmai
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
           className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:ring-2 focus:outline-none"
         />
         <div className="mt-4 flex justify-between">
@@ -32,7 +36,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, email, setEmai
           </button>
           <button
             onClick={onSubmit}
-            className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+            disabled={!isValidEmail(email)}
+            className={`py-2 px-4 rounded-lg ${
+              isValidEmail(email)
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-blue-300 text-white cursor-not-allowed"
+            }`}
           >
             Submit
           </button>
