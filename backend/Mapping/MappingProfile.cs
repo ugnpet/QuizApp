@@ -14,6 +14,7 @@ public class MappingProfile : Profile
 
 public class QuizDTO
 {
+    public int Id { get; set; }
     public string Text { get; set; } = string.Empty;
     public string Type { get; set; } = "text";
     public List<string> Options { get; set; } = new List<string>();

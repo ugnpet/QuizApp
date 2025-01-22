@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Models;
 public class Result
 {
-    public int Id { get; set; }
+    [Key]
     public string UserEmail { get; set; } = string.Empty;
     public int Score { get; set; }
     public int TimeInSeconds { get; set; }
