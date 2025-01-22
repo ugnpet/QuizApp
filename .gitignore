@@ -1,0 +1,11 @@
+# Node.js
+frontend/node_modules/
+
+# ASP.NET Core
+backend/bin/
+backend/obj/
+
+# OS/Editor-specific files
+*.user
+*.vs
+*.DS_Store
